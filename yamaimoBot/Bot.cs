@@ -10,7 +10,7 @@ namespace yamaimoBot
     class Bot
     {
         private static Tokens tokens;
-        private static string[] tags = { "#よかったやまいも", "#よくないさといも" };
+        private static string[] tags = { "#よかったやまいも", "#よくないさといも", "#おこったじゃがいも" };
 
         public Bot()
         {
@@ -26,7 +26,7 @@ namespace yamaimoBot
 
         public void GetContent()
         {
-            foreach (var m in tokens.Streaming.Filter(track: "#よくないさといも, #よかったやまいも")
+            foreach (var m in tokens.Streaming.Filter(track: string.Join(",", tags))
                 .OfType<StatusMessage>()
                 .Select(x => x.Status))
                     Reaction(m);
