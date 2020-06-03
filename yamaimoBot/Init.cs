@@ -9,11 +9,8 @@ namespace yamaimoBot
         static void Main(string[] args)
         {
             Bot bot = new Bot();
-            Timer timer = new Timer(60000);
 
-            timer.Elapsed += (s, e) => { bot.GetContent(); };
-
-            timer.Start();
+            bot.GetContent();
 
             _ = Console.ReadKey();
         }

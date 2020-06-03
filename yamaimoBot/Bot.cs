@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Configuration;
 using System.Collections.Generic;
+using System.Linq;
 using CoreTweet;
+using CoreTweet.Streaming;
 
 namespace yamaimoBot
 {
     class Bot
     {
         private static Tokens tokens;
-        private static string[] tags = { "#よかったやまいも", "#よくないさといも" };
+        private static string[] tags = { "#よかったやまいも", "#よくないさといも", "#おこったじゃがいも" };
 
         public Bot()
         {
@@ -24,23 +26,17 @@ namespace yamaimoBot
 
         public void GetContent()
         {
-            foreach (var i in tokens.Statuses.HomeTimeline())
-            {
-                if (Contains(i.Text) && !IsRetweet(i)) Reaction(i);
-            }
-            foreach (var i in SearchTweet())
-            {
-                if (!IsRetweet(i)) Reaction(i);
-            }
-
-            Console.WriteLine("Got Content");
+            foreach (var m in tokens.Streaming.Filter(track: string.Join(",", tags))
+                .OfType<StatusMessage>()
+                .Select(x => x.Status))
+                    Reaction(m);
         }
 
         private void Reaction(Status status)
         {
             try
             {
-                if (!IsTweetedMe(status) && !(bool)status.IsFavorited)
+                if (!IsRetweet(status) && !IsTweetedMe(status) && !(bool)status.IsFavorited)
                 {
                     Console.WriteLine(status.User.Name);
                     Console.WriteLine(status.Text);
@@ -52,20 +48,6 @@ namespace yamaimoBot
                 }
             }
             catch (Exception e) { Console.WriteLine("Error: " + e.Message); }
-        }
-
-        private List<Status> SearchTweet()
-        {
-            var searchResult = new List<Status>();
-            foreach (var i in tags)
-            {
-                foreach (var j in tokens.Search.Tweets(i))
-                {
-                    searchResult.Add(j);
-                }
-            }
-
-            return searchResult;
         }
 
         private bool IsTweetedMe(Status status)
@@ -80,15 +62,6 @@ namespace yamaimoBot
 
             if (status.Text.Substring(0, 2) == "RT") return true;
             else return false;
-        }
-
-        private bool Contains(string str)
-        {
-            foreach(var i in tags)
-            {
-                if (str.Contains(i)) return true;
-            }
-            return false;
         }
     }
 }
