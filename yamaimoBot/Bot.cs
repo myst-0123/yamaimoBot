@@ -50,20 +50,6 @@ namespace yamaimoBot
             catch (Exception e) { Console.WriteLine("Error: " + e.Message); }
         }
 
-        private List<Status> SearchTweet()
-        {
-            var searchResult = new List<Status>();
-            foreach (var i in tags)
-            {
-                foreach (var j in tokens.Search.Tweets(i))
-                {
-                    searchResult.Add(j);
-                }
-            }
-
-            return searchResult;
-        }
-
         private bool IsTweetedMe(Status status)
         {
             if (status.User.ScreenName == "yamaimoBot") return true;
@@ -76,15 +62,6 @@ namespace yamaimoBot
 
             if (status.Text.Substring(0, 2) == "RT") return true;
             else return false;
-        }
-
-        private bool Contains(string str)
-        {
-            foreach(var i in tags)
-            {
-                if (str.Contains(i)) return true;
-            }
-            return false;
         }
     }
 }
