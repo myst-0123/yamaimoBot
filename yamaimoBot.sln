@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yamaimoBot", "yamaimoBot\yamaimoBot.csproj", "{47C1591C-822B-4AEC-84E2-EF86C18C20A2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47C1591C-822B-4AEC-84E2-EF86C18C20A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47C1591C-822B-4AEC-84E2-EF86C18C20A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47C1591C-822B-4AEC-84E2-EF86C18C20A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47C1591C-822B-4AEC-84E2-EF86C18C20A2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {46A5DAE1-5272-432E-BFF4-2A8610C2B86B}
+	EndGlobalSection
+EndGlobal
