@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Configuration;
 using System.Collections.Generic;
+using System.Linq;
 using CoreTweet;
+using CoreTweet.Streaming;
 
 namespace yamaimoBot
 {
@@ -24,23 +26,17 @@ namespace yamaimoBot
 
         public void GetContent()
         {
-            foreach (var i in tokens.Statuses.HomeTimeline())
-            {
-                if (Contains(i.Text) && !IsRetweet(i)) Reaction(i);
-            }
-            foreach (var i in SearchTweet())
-            {
-                if (!IsRetweet(i)) Reaction(i);
-            }
-
-            Console.WriteLine("Got Content");
+            foreach (var m in tokens.Streaming.Filter(track: "#よくないさといも, #よかったやまいも")
+                .OfType<StatusMessage>()
+                .Select(x => x.Status))
+                    Reaction(m);
         }
 
         private void Reaction(Status status)
         {
             try
             {
-                if (!IsTweetedMe(status) && !(bool)status.IsFavorited)
+                if (!IsRetweet(status) && !IsTweetedMe(status) && !(bool)status.IsFavorited)
                 {
                     Console.WriteLine(status.User.Name);
                     Console.WriteLine(status.Text);
